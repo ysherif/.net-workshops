@@ -21,7 +21,6 @@ namespace Mars.Rovers.Navigation
                 return;
             }
             
-
             Command roverCommand = new Command(args);
             
             Plateau plateau = new Plateau(roverCommand.PlateauWidth, roverCommand.PlateauHeight);
@@ -32,18 +31,10 @@ namespace Mars.Rovers.Navigation
             Rover roverOne = new Rover(plateau, positionOne);
             Rover roverTwo = new Rover(plateau, positionTwo);
 
-            roverCommand.RoverOneDirections.ToList().ForEach(o =>
-            {
-                roverOne.ActionCommand(o);
-            });
-
-            roverCommand.RoverTwoDirections.ToList().ForEach(o =>
-            {
-                roverTwo.ActionCommand(o);
-            });
-
+            roverOne.ActionCommands(roverCommand.RoverOneDirections);
+            roverTwo.ActionCommands(roverCommand.RoverTwoDirections);
+         
             Console.WriteLine(string.Concat(roverOne.PrintPosition()," ", roverTwo.PrintPosition()));
-            Console.ReadLine();
         }
 
 

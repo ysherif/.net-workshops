@@ -1,5 +1,4 @@
-﻿
-namespace Mars.Rovers.Navigation
+﻿namespace Mars.Rovers.Navigation
 {
     public class Rover
     {
@@ -12,7 +11,7 @@ namespace Mars.Rovers.Navigation
             _plateau = plateau;
         }
 
-        public void MoveForward()
+        private void MoveForward()
         {
                 switch (_currentPosition.orientation)
                 {
@@ -35,7 +34,7 @@ namespace Mars.Rovers.Navigation
             }
         }
 
-        public void TurnLeft()
+        private void TurnLeft()
         {
            
             switch (_currentPosition.orientation)
@@ -56,7 +55,7 @@ namespace Mars.Rovers.Navigation
 
         }
 
-        public void TurnRight()
+        private void TurnRight()
         {
 
             switch (_currentPosition.orientation)
@@ -77,17 +76,24 @@ namespace Mars.Rovers.Navigation
 
         }
 
-        public void ActionCommand(char commandSymbol)
+        public void ActionCommands(string commandSymbols)
         {
-            switch (commandSymbol)
+            foreach (var commandSymbol in commandSymbols)
             {
-                case 'M': MoveForward();
-                    break;
-                case 'L': TurnLeft();
-                    break;
-                case 'R':TurnRight();
-                    break;
+                switch (commandSymbol)
+                {
+                    case 'M':
+                        MoveForward();
+                        break;
+                    case 'L':
+                        TurnLeft();
+                        break;
+                    case 'R':
+                        TurnRight();
+                        break;
+                }
             }
+          
         }
 
         public string PrintPosition()
