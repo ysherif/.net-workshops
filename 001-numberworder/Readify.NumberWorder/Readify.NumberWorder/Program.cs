@@ -11,7 +11,7 @@ namespace Readify.NumberWorder
         static void Main(string[] args)
         {
             try
-            {
+            { 
                 if (args.Length == 0)
                     throw new ArgumentNullException();
 
