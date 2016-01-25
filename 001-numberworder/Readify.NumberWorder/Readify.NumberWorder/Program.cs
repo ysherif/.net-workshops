@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Readify.NumberWorder
 {
@@ -11,76 +10,35 @@ namespace Readify.NumberWorder
         static void Main(string[] args)
         {
             try
-            { 
-                if (args.Length == 0)
-                    throw new ArgumentNullException();
-
-                if (args.Length > 1)
-                    throw new ArgumentOutOfRangeException();
-                int number;
+            {
+                var numbersDictionary = new Dictionary<char, string>() {
+                    { '0', "ZERO" },
+                    { '1', "ONE" },
+                    { '2', "TWO" },
+                    { '3', "THREE" },
+                    { '4', "FOUR" },
+                    { '5', "FIVE" },
+                    { '6', "SIX" },
+                    { '7', "SEVEN" },
+                    { '8', "EIGHT" },
+                    { '9', "NINE" },
+                };
                 
-                if (!args[0].All(o => int.TryParse(o.ToString(), out number)))
-                    throw new InvalidCastException();
+                var result = ValidateInput(args);
 
-                var words = string.Join(string.Empty, args[0].Select(i => GetWordsFromNumber(i)));
+                if (!result.Count().Equals(0))
+                {
+                    result.ForEach(o => { WriteLineWithColor(o.Message, ConsoleColor.Red); });
+                    return;
+                }
+                
+                var words = string.Join(string.Empty, args[0].Select(i => numbersDictionary[i]));
 
                 WriteLineWithColor(string.Format("Output: {0}", words), ConsoleColor.Green);
-
-            }
-            catch(ArgumentNullException)
-            {
-                WriteLineWithColor("Please make sure that the input is not empty.", ConsoleColor.Red);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                WriteLineWithColor("Please make sure there is only one input without spaces.", ConsoleColor.Red);
-            }
-            catch (InvalidCastException)
-            {
-                WriteLineWithColor("Please make sure that the input contains only numbers.", ConsoleColor.Red);
             }
             catch (Exception ex)
             {
                 WriteLineWithColor(ex.Message, ConsoleColor.Red);
-            }
-        }
-
-        private static string GetWordsFromNumber(char number)
-        {
-
-            switch (number)
-            {
-                case '0':
-                    return "ZERO";
-
-                case '1':
-                   return "ONE";
-
-                case '2':
-                    return "TWO";
-
-                case '3':
-                    return "THREE";
-
-                case '4':
-                    return "FOUR";
-
-                case '5':
-                    return "FIVE";
-
-                case '6':
-                    return "SIX";
-
-                case '7':
-                    return "SEVEN";
-
-                case '8':
-                    return "EIGHT";
-                    
-                case '9':
-                    return "NINE";
-
-                default: return string.Empty; 
             }
         }
         
@@ -91,7 +49,28 @@ namespace Readify.NumberWorder
             Console.ResetColor();
         }
 
+        private static List<Result> ValidateInput(string[] args)
+        {
+            var validationResult = new List<Result>();
+
+            if (args.Length == 0)
+                validationResult.Add(new Result() { Message = "Please make sure that the input is not empty." });
+
+            if (args.Length > 1)
+                validationResult.Add(new Result() { Message = "Please make sure there is only one input without spaces." });
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(args[0], "^[0-9]*$"))
+                validationResult.Add(new Result() { Message = "Please make sure that the input contains only numbers." });
+
+            return validationResult;
         }
+
+        }
+        struct Result
+    {
+        public string Message { get; set; }
+    }
+
     }
 
     
