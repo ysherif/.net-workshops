@@ -15,19 +15,25 @@ namespace Readify.NumberWorder
                 if (args.Length == 0)
                     throw new ArgumentNullException();
 
+                if (args.Length > 1)
+                    throw new ArgumentOutOfRangeException();
                 int number;
                 
                 if (!args[0].All(o => int.TryParse(o.ToString(), out number)))
                     throw new InvalidCastException();
-                
-               var words = string.Join(string.Empty, args[0].Select(o => int.Parse(o.ToString())).Select(i => GetWordsFromNumber(i)));
-                
+
+                var words = string.Join(string.Empty, args[0].Select(i => GetWordsFromNumber(i)));
+
                 WriteLineWithColor(string.Format("Output: {0}", words), ConsoleColor.Green);
 
             }
             catch(ArgumentNullException)
             {
                 WriteLineWithColor("Please make sure that the input is not empty.", ConsoleColor.Red);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                WriteLineWithColor("Please make sure there is only one input without spaces.", ConsoleColor.Red);
             }
             catch (InvalidCastException)
             {
@@ -39,39 +45,39 @@ namespace Readify.NumberWorder
             }
         }
 
-        private static string GetWordsFromNumber(int number)
+        private static string GetWordsFromNumber(char number)
         {
 
             switch (number)
             {
-                case 0:
+                case '0':
                     return "ZERO";
 
-                case 1:
+                case '1':
                    return "ONE";
 
-                case 2:
+                case '2':
                     return "TWO";
 
-                case 3:
+                case '3':
                     return "THREE";
 
-                case 4:
+                case '4':
                     return "FOUR";
 
-                case 5:
+                case '5':
                     return "FIVE";
 
-                case 6:
+                case '6':
                     return "SIX";
 
-                case 7:
+                case '7':
                     return "SEVEN";
 
-                case 8:
+                case '8':
                     return "EIGHT";
                     
-                case 9:
+                case '9':
                     return "NINE";
 
                 default: return string.Empty; 
