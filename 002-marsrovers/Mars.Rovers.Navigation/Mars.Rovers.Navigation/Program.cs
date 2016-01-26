@@ -10,9 +10,6 @@ namespace Mars.Rovers.Navigation
     {
         static void Main(string[] args)
         {
-
-            args = new string[] { "5", "5" ,"1", "2", "N" ,"LMLMLMLMM", "3" ,"3" ,"E" ,"MMRMMRMRRM"};
-            
             var result = ValidateInput(args);
 
             if (!result.Count().Equals(0))
@@ -21,37 +18,35 @@ namespace Mars.Rovers.Navigation
                 return;
             }
             
-            Command roverCommand = new Command(args);
+            Command roverOneCommand = new Command(args.Take(6).ToArray(),true);
+            Command roverTwoCommand = new Command(args.Skip(6).ToArray(),false);
             
-            Plateau plateau = new Plateau(roverCommand.PlateauWidth, roverCommand.PlateauHeight);
+            Plateau plateau = new Plateau(roverOneCommand.PlateauWidth, roverOneCommand.PlateauHeight);
 
-            Position positionOne = new Position(roverCommand.RoverOneCurrentX, roverCommand.RoverOneCurrentY, roverCommand.RoverOneOrientation);
-            Position positionTwo = new Position(roverCommand.RoverTwoCurrentX, roverCommand.RoverTwoCurrentY, roverCommand.RoverTwoOrientation);
+            Position positionOne = new Position(roverOneCommand.CurrentX, roverOneCommand.CurrentY, roverOneCommand.Orientation);
+            Position positionTwo = new Position(roverTwoCommand.CurrentX, roverTwoCommand.CurrentY, roverTwoCommand.Orientation);
 
             Rover roverOne = new Rover(plateau, positionOne);
             Rover roverTwo = new Rover(plateau, positionTwo);
 
-            roverOne.ActionCommands(roverCommand.RoverOneDirections);
-            roverTwo.ActionCommands(roverCommand.RoverTwoDirections);
-         
-            Console.WriteLine(string.Concat(roverOne.PrintPosition()," ", roverTwo.PrintPosition()));
+            roverOne.ActionCommands(roverOneCommand.Directions);
+            roverTwo.ActionCommands(roverTwoCommand.Directions);
+
+            WriteLineWithColor(string.Concat(roverOne.PrintPosition()," ", roverTwo.PrintPosition()),ConsoleColor.Green);
         }
 
 
         static IEnumerable<Result> ValidateInput(string[] args)
         {
-            //if (args.Length != 10)
-             //   yield return new Result("The number of arguments doesn't match the required number.");
+            if (args.Length != 10)
+                yield return new Result("The number of arguments doesn't match the required number.");
 
             string regex = "[0-9] [0-9] [0-9] [0-9] [A-Z] [A-Z]* [0-9] [0-9] [A-Z] [A-Z]*";
 
             string joinedArgs = string.Join(" ", args);
 
             if (!System.Text.RegularExpressions.Regex.IsMatch(joinedArgs, regex))
-            {
                 yield return new Result("The input is not valid, please enter a valid input. Example: 5 5 1 2 N LMLMLMLMM 3 3 E MMRMMRMRRM");
-            }
-
         }
 
 
