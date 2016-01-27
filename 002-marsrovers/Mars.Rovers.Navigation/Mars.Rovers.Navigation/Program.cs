@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Mars.Rovers.Navigation
 {
@@ -14,42 +13,74 @@ namespace Mars.Rovers.Navigation
 
             if (!result.Count().Equals(0))
             {
-                result.ToList().ForEach(o => { WriteLineWithColor(o.Message, ConsoleColor.Red); });
+                foreach (var error in result)
+                {
+                    WriteLineWithColor(error.Message, ConsoleColor.Red);
+                }
                 return;
             }
-            
-            Command roverOneCommand = new Command(args.Take(6).ToArray(),true);
-            Command roverTwoCommand = new Command(args.Skip(6).ToArray(),false);
-            
-            Plateau plateau = new Plateau(roverOneCommand.PlateauWidth, roverOneCommand.PlateauHeight);
 
-            Position positionOne = new Position(roverOneCommand.CurrentX, roverOneCommand.CurrentY, roverOneCommand.Orientation);
-            Position positionTwo = new Position(roverTwoCommand.CurrentX, roverTwoCommand.CurrentY, roverTwoCommand.Orientation);
+            var lines = File.ReadAllLines(args[0]);
+            var platueaXY = lines[0].Split(' ');
+            Plateau plateau = new Plateau(int.Parse(platueaXY[0]), int.Parse(platueaXY[1]));
+            var j = 1;
 
-            Rover roverOne = new Rover(plateau, positionOne);
-            Rover roverTwo = new Rover(plateau, positionTwo);
+            for (int i = 1; i < lines.Length; i += 2)
+            {
+                var pos = lines[i].Split(' ');
+                var x = int.Parse(pos[0]);
+                var y = int.Parse(pos[1]);
+                var orientation = (Orientation)Enum.Parse(typeof(Orientation), pos[2], true);
 
-            roverOne.ActionCommands(roverOneCommand.Directions);
-            roverTwo.ActionCommands(roverTwoCommand.Directions);
+                Position position = new Position(x, y, orientation);
+                Rover rover = new Rover(plateau, position);
 
-            WriteLineWithColor(string.Concat(roverOne.PrintPosition()," ", roverTwo.PrintPosition()),ConsoleColor.Green);
+                var instruction = lines[i + 1];
+                rover.ActionCommands(instruction);
+                WriteLineWithColor($"Rover {j} :"+ rover.PrintPosition(), ConsoleColor.Green);
+                j++;
+            }
+
         }
-
-
+        
         static IEnumerable<Result> ValidateInput(string[] args)
         {
-            if (args.Length != 10)
-                yield return new Result("The number of arguments doesn't match the required number.");
 
-            string regex = "[0-9] [0-9] [0-9] [0-9] [A-Z] [A-Z]* [0-9] [0-9] [A-Z] [A-Z]*";
+            if(args.Length != 1)
+                 yield return new Result("Please only input the text file's full path.");
 
-            string joinedArgs = string.Join(" ", args);
+            if(!File.Exists(args[0]))
+                yield return new Result("Can't find the text file, please check the file and try again.");
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(joinedArgs, regex))
-                yield return new Result("The input is not valid, please enter a valid input. Example: 5 5 1 2 N LMLMLMLMM 3 3 E MMRMMRMRRM");
+            var lines = File.ReadAllLines(args[0]);
+
+            if(lines.Length < 3)
+                yield return new Result("Some instuctions are missing, please complete at least 3 lines of instructions.");
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(lines[0], "[0-9] [0-9]$"))
+                yield return new Result("The plateau's height and width are not in the correct formate.");
+
+            string oddRegex = "[0-9] [0-9] [NnWwSsEe]$";
+            string evenRegex = "[LlMmRr]$";
+            
+            for (int i = 1; i < lines.Length; i++)
+            {
+                bool odd = i % 2 != 0;
+                
+                if (odd && (!System.Text.RegularExpressions.Regex.IsMatch(lines[i], oddRegex)))
+                    {
+                        yield return new Result("Some instuctions are not in the right formate.");
+                        break;
+                    }
+                
+                if (!odd && (!System.Text.RegularExpressions.Regex.IsMatch(lines[i], evenRegex)))
+                {
+                        yield return new Result("Some instuctions are not in the right formate.");
+                        break;
+                }
+            }
         }
-
-
+        
         struct Result
         {
             public Result(string message)

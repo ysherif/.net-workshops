@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
     <Compile Include="Plateau\IPlateau.cs" />
     <Compile Include="Plateau\Plateau.cs" />
     <Compile Include="Position\IPosition.cs" />
