@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron text-center">
+    <h1>Should I Tweet?</h1>
+    <p class="text-center">Worried if a specific tweet is appropriate to be shared on social media?</p>
+    <p class="text-center">Enter the tweet below and we will tell you!</p>
+</div>
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post))
+{
+    <div class="row">
+        <div class="form-group col-lg-8">
+            <input type="text" class="form-control" name="txtTweet" id="txtTweet" placeholder="Type in your Tweet...">
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </div>
+}
+
