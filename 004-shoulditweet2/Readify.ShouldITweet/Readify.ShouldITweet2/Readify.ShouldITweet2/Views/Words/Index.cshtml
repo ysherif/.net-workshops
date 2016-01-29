@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Readify.ShouldITweet2.Models.Word>
+
+@{
+    ViewBag.Title = "Inappropriate Words List";
+}
+
+<h2>Inappropriate Words List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.WordText)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.WordText)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.WordID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.WordID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.WordID })
+        </td>
+    </tr>
+}
+
+</table>
