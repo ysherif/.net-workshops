@@ -11,7 +11,7 @@ namespace Mars.Rovers.Navigation
         {
             var result = ValidateInput(args);
 
-            if (!result.Count().Equals(0))
+            if (!result.Any())
             {
                 foreach (var error in result)
                 {
@@ -30,7 +30,7 @@ namespace Mars.Rovers.Navigation
                 var pos = lines[i].Split(' ');
                 var x = int.Parse(pos[0]);
                 var y = int.Parse(pos[1]);
-                var orientation = (Orientation)Enum.Parse(typeof(Orientation), pos[2], true);
+                var orientation = (Orientation)Enum.Parse(typeof(Orientation), pos[2],ignoreCase: true);
 
                 Position position = new Position(x, y, orientation);
                 Rover rover = new Rover(plateau, position);
