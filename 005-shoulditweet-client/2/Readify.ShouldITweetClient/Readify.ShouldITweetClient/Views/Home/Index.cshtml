@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div id="bodyContainer" ng-app="TweetApp">
+    <div ng-controller="TweetCtrl">
+        <button ng-click="answer()">Click</button>
+        <div>
+            {{answered}}
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/angular.js")
+    @Scripts.Render("~/Scripts/app/tweet-controller.js")
+}
