@@ -1,0 +1,15 @@
+﻿2016-01-29 10:30:45.002 +10:00 [Information] The site have been accessed.
+2016-01-29 10:31:58.128 +10:00 [Information] The site have been accessed.
+2016-01-29 10:33:04.356 +10:00 [Information] The site have been accessed.
+2016-01-29 10:36:55.116 +10:00 [Information] The site have been accessed.
+2016-01-29 10:37:34.633 +10:00 [Information] The site have been accessed.
+2016-01-29 10:40:41.531 +10:00 [Information] The site have been accessed.
+2016-01-29 10:43:23.047 +10:00 [Information] The site have been accessed.
+2016-01-29 11:04:23.155 +10:00 [Information] A tweet has been submitted.
+2016-01-29 11:04:27.060 +10:00 [Error] Empty tweet has been submitted.
+2016-01-29 11:16:37.998 +10:00 [Information] The word with Id 3 has been deleted.
+2016-01-29 11:16:49.675 +10:00 [Information] A new tweet has been created.
+2016-01-29 11:16:57.222 +10:00 [Information] The word with Id 1 has been edited.
+2016-01-29 11:19:24.219 +10:00 [Error] A tweet contains word 'Everything' has been submitted
+2016-01-29 11:35:37.052 +10:00 [Error] A tweet contains word 'trump' has been submitted
+2016-01-29 11:35:45.425 +10:00 [Information] The tweet doesn't contain any inappropriate words.
