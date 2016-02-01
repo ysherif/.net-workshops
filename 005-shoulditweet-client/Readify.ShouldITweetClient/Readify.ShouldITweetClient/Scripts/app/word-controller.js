@@ -7,8 +7,6 @@
                   $scope.words = response.data;
               });
 
-
-
         $scope.createWord = function()
         {
             var word = { "WordText": $scope.txtWordName,"WordId":0 };
