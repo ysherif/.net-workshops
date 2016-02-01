@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace Readify.ShouldITweet2.DAL
+namespace Readify.ShouldITweetClient.DAL
 {
     using Models;
     using System.Data.Entity.ModelConfiguration.Conventions;

@@ -2,17 +2,35 @@
     ViewBag.Title = "Home";
 }
 
-<div id="bodyContainer" ng-app="TweetApp">
-    <div ng-controller="TweetCtrl">
-        <button ng-click="answer()">Click</button>
-        <div>
-            {{answered}}
+<div ng-app="TweetApp" ng-controller="TweetCtrl">
+
+    <div class="jumbotron text-center">
+        <h1>Should I Tweet?</h1>
+        <p class="text-center">Worried if a specific tweet is appropriate to be shared on social media?</p>
+        <p class="text-center">Enter the tweet below and we will tell you!</p>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-lg-8">
+            <input type="text" class="form-control" name="txtTweet" ng-model="txtTweet" id="txtTweet" placeholder="Type in your Tweet...">
+        </div>
+        <button class="btn btn-primary" ng-click="submitTweet()">Submit</button>
+    </div>
+
+    <div class="modal fade" id="modalResult" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{modalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{modalBody}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
-@section scripts {
-    @Scripts.Render("~/Scripts/angular.js")
-    @Scripts.Render("~/Scripts/app/tweet-controller.js")
-}

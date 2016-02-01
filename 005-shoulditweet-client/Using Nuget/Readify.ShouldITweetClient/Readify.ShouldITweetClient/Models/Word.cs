@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Readify.ShouldITweet2.Models
+namespace Readify.ShouldITweetClient.Models
 {
     public class Word
     {

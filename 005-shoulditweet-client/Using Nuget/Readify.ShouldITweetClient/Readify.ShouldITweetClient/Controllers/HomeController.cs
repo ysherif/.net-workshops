@@ -13,5 +13,15 @@ namespace Readify.ShouldITweetClient.Controllers
             return View();
         }
 
+        public ActionResult ManageWords()
+        {
+            return View();
+        }
+
+        public ActionResult CreateWord()
+        {
+            return View();
+        }
+
     }
 }
