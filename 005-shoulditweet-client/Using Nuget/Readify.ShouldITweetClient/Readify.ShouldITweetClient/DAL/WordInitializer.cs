@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Readify.ShouldITweet2.DAL
+namespace Readify.ShouldITweetClient.DAL
 {
     using Models;
     public class WordInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<WordContext>

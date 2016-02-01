@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Manage Words";
+}
+
+<div ng-app="TweetApp" ng-controller="wordCtrl">
+    <h2>Manage Words</h2>
+    <div><button class="btn btn-default" onclick="location.href = '/Home/CreateWord'">Add Word</button></div>
+    <br />
+    <div>
+        <table class="table">
+            <tr ng-repeat="w in words">
+                <td>
+                    {{w.wordText}}
+                </td>
+                <td><button class="btn btn-default" ng-click="openEditModal(w)">Edit</button></td>
+                <td><button class="btn btn-default" ng-click="deleteWord(w.wordID)">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{modalEditTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <div>
+                        <b>Word: </b>
+                        <input type="text" class="form-control" ng-model="wordToEdit.wordText">
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="editWord()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
